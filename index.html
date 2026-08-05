@@ -1,28 +1,895 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Saya</title>
+<!DOCTYPE html><html class="dark scroll-smooth bg-background text-on-background" lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aetheric - Portofolio tak niat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config" src="tailwind-config.js"></script>
+<link rel="stylesheet" href="styles.css">
+        html, body {
+            background-color: #111415;
+            color: #e1e3e4;
+            overflow-x: hidden;
+        }
 
-    <!-- Hubungkan ke CSS -->
-    <link rel="stylesheet" href="style.css">
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 120px;
+        }
+
+        section[id] {
+            scroll-margin-top: 120px;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(215, 186, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(17, 20, 21, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid;
+            border-image-source: linear-gradient(135deg, rgba(204, 195, 213, 0.2) 0%, rgba(215, 186, 255, 0.05) 100%);
+            border-image-slice: 1;
+        }
+
+        .glow-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(215, 186, 255, 0.08) 0%, rgba(17, 20, 21, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #d7baff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        .cursor-dot.hover {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: 1px solid #d7baff;
+        }
+
+        /* Ambient Shadow */
+        .btn-primary {
+            box-shadow: 0 0 20px rgba(215, 186, 255, 0);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(215, 186, 255, 0.4);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        /* Auto-scrolling Slider */
+        @keyframes slide-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 12px)); }
+        }
+        .scroll-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            animation: slide-left 40s linear infinite;
+        }
+        .scroll-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Floating Animation */
+        @keyframes float-img {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float-img 6s ease-in-out infinite;
+        }
+
+        /* Sparkle Animation */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.7; transform: scale(1); box-shadow: 0 0 8px 1px #bd93f9; }
+        }
+        .sparkle {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+        }
+        
+        /* Scroll Reveal Transitions */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.5, 0, 0, 1), transform 1.2s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-down {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 1.2s cubic-bezier(0.5, 0, 0, 1), transform 1.2s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-down.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-fade {
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+        .reveal-fade.active {
+            opacity: 1;
+        }
+        .stagger-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.5, 0, 0, 1), transform 1.2s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .stagger-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cursor Orbital Skills Animation */
+        .skills-interactive-container {
+            position: relative;
+            width: 100%;
+            height: 700px; /* Increased height */
+            overflow: hidden;
+            cursor: default;
+        }
+        
+        .cursor-orbit-center {
+            position: absolute;
+            width: 0;
+            height: 50;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+        }
+
+        .skill-node-interactive {
+            position: absolute;
+            z-index: 3;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-content {
+            width: 80px; /* Scaled down size */
+            height: 80px;
+            background: rgba(17, 20, 21, 0.8);
+            border: 1px solid rgba(215, 186, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(189, 147, 249, 0.2);
+            backdrop-filter: blur(10px);
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin-left: -40px; /* Adjusted margin */
+            margin-top: -40px;
+        }
+        
+        .skill-node-interactive:hover .skill-content {
+            box-shadow: 0 0 20px rgba(215, 186, 255, 0.8);
+            transform: scale(1.1);
+            background: rgba(189, 147, 249, 0.15);
+            border-color: #d7baff;
+        }
+        
+        .skill-content img {
+            width: 32px; /* Scaled down icon */
+            height: 32px;
+            margin-bottom: 4px;
+        }
+        
+        .skill-content span {
+            font-size: 10px; /* Scaled down text */
+        }
+
+        .about-3d-scene {
+            perspective: 1200px;
+            width: 100%;
+            max-width: 420px;
+            min-width: 280px;
+            aspect-ratio: 4 / 5;
+            margin: 0 auto;
+        }
+
+        .about-3d-card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+        }
+
+        .about-card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        .about-card-front {
+            background: #111415;
+        }
+
+        .about-card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-card-label {
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            background: rgba(17, 20, 21, 0.85);
+            color: #fff;
+            padding: 0.65rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-card-back {
+            transform: rotateY(180deg);
+            background-image: url('./423454bd97c71ac4aeba351c6ceae3bf.jpg.jpeg') !important;
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            background-color: #1a1a1a !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .about-back-content {
+            width: 100%;
+            max-width: 100%;
+            color: #e1e3e4;
+            text-align: left;
+            background: rgba(17, 20, 21, 0.8);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .about-back-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .about-back-role {
+            font-size: 1rem;
+            color: #d7baff;
+            margin-bottom: 1rem;
+        }
+
+        .about-back-detail {
+            font-size: 0.95rem;
+            color: #ccc3d5;
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+
+        .about-3d-scene:hover .about-3d-card {
+            transform: scale(1.03);
+        }
+
+    
 </head>
-<body>
+<body class="antialiased min-h-screen flex flex-col relative bg-background">
+<div class="cursor-dot hidden md:block" id="cursorDot" style="left: 427px; top: 4346px;"></div>
+<!-- TopNavBar from JSON -->
+<nav class="fixed top-0 w-full z-50 bg-background/40 backdrop-blur-xl border-b shadow-none border-outline-variant/20">
+<div class="flex justify-center items-center px-margin-mobile md:px-margin-desktop py-base w-full max-w-full">
+<a class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg font-bold text-primary tracking-tighter hover:scale-105 transition-transform duration-300 absolute left-margin-desktop" href="#" style="font-size: 32px;">Aetheric</a>
+<div class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300 font-body-md text-body-md hover:bg-primary/10 rounded-lg px-4 py-2 hover:-translate-y-1" href="#hero">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300 font-body-md text-body-md hover:bg-primary/10 rounded-lg px-4 py-2 hover:-translate-y-1" href="#about">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300 font-body-md text-body-md hover:bg-primary/10 rounded-lg px-4 py-2 hover:-translate-y-1" href="#projects">Projects</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300 font-body-md text-body-md hover:bg-primary/10 rounded-lg px-4 py-2 hover:-translate-y-1" href="#skills">Skills</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300 font-body-md text-body-md hover:bg-primary/10 rounded-lg px-4 py-2 hover:-translate-y-1" href="#contact">Contact</a>
+</div>
+<button class="md:hidden text-primary interactive hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="flex-grow pt-32">
+<!-- Hero Section -->
+<section class="relative min-h-[819px] flex items-center px-margin-mobile md:px-margin-desktop mb-section-gap overflow-hidden reveal-down active" id="hero">
+<div class="glow-bg top-0 left-0"></div>
+<div class="absolute inset-0 z-[1] pointer-events-none" id="sparkles-container"></div>
+<div class="max-w-4xl relative z-10">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface mb-6 relative z-10 reveal-up active" data-delay="100"><span class="text-shimmer-premium">Merancang Masa Depan</span> <br><span class="text-primary italic font-light text-shimmer-premium">Satu Piksel Sekaligus.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-10 relative z-10 bg-background/50 backdrop-blur-sm p-4 rounded-xl inline-block shadow-[0_0_20px_rgba(17,20,21,0.8)] reveal-up active" data-delay="300">
+                    Desainer UI/UX visioner yang menggabungkan estetika editorial mewah dengan interaksi futuristik yang minimalis. Mengubah ide kompleks menjadi pengalaman digital yang mulus dan elegan.
+                </p>
+<div class="flex gap-4 relative z-10 reveal-up active" data-delay="500"><a class="bg-primary text-black font-label-sm text-label-sm px-8 py-4 rounded-full btn-primary interactive inline-block text-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:shadow-[0_0_30px_rgba(215,186,255,0.4)] reveal-up active" data-delay="500" href="#projects">Lihat Karya</a><a class="border border-outline-variant text-on-surface font-label-sm text-label-sm px-8 py-4 rounded-full hover:bg-primary/10 hover:border-primary transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] interactive bg-background/50 backdrop-blur-sm hover:scale-105 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(215,186,255,0.2)] inline-block text-center reveal-up active" data-delay="650" href="#contact">Hubungi Saya</a></div>
+</div>
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[600px] hidden lg:block pointer-events-none z-[5]">
+<div class="relative w-full h-full">
+<!-- WebGL Shader -->
+<canvas class="absolute inset-0 w-full h-full blur-[40px] opacity-70 mix-blend-screen" height="600" id="hero-shader" width="640"></canvas>
+<!-- Existing Image -->
+<div class="absolute inset-0 w-full h-full bg-contain bg-right bg-no-repeat animate-float opacity-80" data-alt="A highly abstract, 3D generative art piece featuring flowing, translucent lavender ribbons and geometric glass shapes floating in a vast, dark void. The lighting is dramatic, with soft, ethereal rim light highlighting the edges of the forms, creating a sense of deep space and quiet luxury." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOIUywmZyQC7NVfZ0G7PSpkTxOB-99poO0KDliwRHjS_429WNeeT2u4Av4Pmcyifm_ucA1ylZV9AjJwIt146T4weSJcDv489HetoYYfkLDS8J3cV-dA9SzC2E2uZiitUlzSkR8KNxSR-8XpM-aI88t9arMR-vjJRIHJjJND3pELKMh9pEs8rGok0Ot278gwGgokX3jDD6UBM4Bx9DpBVMeCIUDM7Jpy9EQTbHaaDBIlOrXSxRcu6Yx')"></div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap relative reveal-up active" id="about"><div class="glow-bg top-1/2 right-1/4"></div><div class="relative max-w-6xl mx-auto"><div class="absolute inset-0 rounded-2xl overflow-hidden blur-xl opacity-40 z-0 pointer-events-none"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_70%,#bd93f9_100%)] animate-spin" style="animation-duration: 4s;"></div></div><div class="relative z-10 rounded-2xl overflow-hidden p-[2px] bg-background"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_70%,#bd93f9_100%)] animate-spin" style="animation-duration: 4s;"></div><div class="relative bg-[#111415] rounded-[14px] p-8 md:p-12 flex flex-col lg:flex-row gap-12 items-center"><div class="w-full lg:w-[40%] flex-shrink-0 about-3d-scene rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+<div class="about-3d-card" id="about3dCard">
+<div class="about-card-face about-card-front">
+<img alt="A high-end, futuristic portrait of a creative professional designer" class="w-full h-full object-cover" src="./Tanpa judul - 05 August 2026 at 21.44.46.png">
+<div class="about-card-label">ID Card</div>
+</div>
+<div class="about-card-face about-card-back">
+<div class="about-back-content">
+<p class="about-back-title">M. Arya Dzul Fikri</p>
+<p class="about-back-role">Desainer UI/UX</p>
+<p class="about-back-detail">SMK Negeri 4 Palembang</p>
+<p class="about-back-detail">hello@aetheric.design</p>
+<p class="about-back-detail">+62 812-3456-7890</p>
+</div>
+</div>
+</div>
+</div><div class="flex-grow"><h2 class="font-headline-md text-headline-md text-on-surface mb-6">Tentang Orewa</h2><aya class="font-body-lg text-body-lg text-on-surface-variant mb-6">Halo, saya M. Arya Dzul Fikri, pelajar SMK Negeri 4 Palembang yang memiliki ketertarikan di bidang desain. Saya senang mengeksplorasi ide-ide kreatif, mempelajari hal-hal baru, dan terus mengembangkan kemampuan untuk menghasilkan karya yang menarik dan bermanfaat. Melalui portofolio ini, saya menampilkan hasil karya sebagai bagian dari perjalanan belajar dan pengembangan diri saya.</aya menempuh pendidikan dasar di SD Taman Siswa, kemudian melanjutkan pendidikan di SMP Negeri 8 Palembang. Saat ini, saya merupakan siswa SMK Negeri 4 Palembang. Selama bersekolah di SMK, saya aktif mengikuti kegiatan Ekstrakurikuler Media Siaran Sekolah dan Organisasi Siswa Intra Sekolah (OSIS) sebagai sarana untuk mengembangkan keterampilan, kreativitas, kemampuan komunikasi, serta kerja sama dalam tim.<p class="font-body-lg text-body-lg text-on-surface-variant"></p><div class="mt-10 grid grid-cols-2 gap-6"><div class="glass-panel p-4 rounded-xl text-center"><span class="font-display-lg-mobile text-display-lg-mobile text-primary block mb-2">2</span><span class="font-label-sm text-label-sm text-outline">Tahun Pengalaman</span></div><div class="glass-panel p-4 rounded-xl text-center"><span class="font-display-lg-mobile text-display-lg-mobile text-primary block mb-2">02</span><span class="font-label-sm text-label-sm text-outline">Proyek Selesai</span></div></div></div></div></div></div></div>
+</section>
+<!-- Projects Section -->
+<section class="mb-section-gap w-full overflow-hidden bg-surface" id="projects">
+<div class="px-margin-mobile md:px-margin-desktop mb-12 flex justify-between items-end reveal-up active">
+<h2 class="font-headline-md text-headline-md text-on-surface">Karya Terpilih</h2>
+<a class="font-label-sm text-label-sm text-primary hover:underline interactive flex items-center gap-2" href="#">Semua Proyek <span class="material-symbols-outlined text-[16px] transition-transform duration-300 hover:translate-x-1">arrow_forward</span></a>
+</div>
+<div class="relative w-full overflow-hidden px-margin-mobile md:px-margin-desktop">
+<div class="scroll-track">
+<!-- Project 1 -->
+<div class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="0" style="transition-delay: 0ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 01</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Proyek ini sedang dalam tahap pengembangan. Nantikan karya menarik yang akan segera hadir.</p>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="150" style="transition-delay: 150ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 02</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Karya ini sedang dipersiapkan dengan konsep yang menarik. Update selanjutnya akan segera muncul.</p>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="300" style="transition-delay: 300ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 03</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Proyek ini masih dalam proses pembuatan. Saya sedang menyiapkan pengalaman visual yang lebih menarik.</p>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="450" style="transition-delay: 450ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 04</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Karya ini akan segera dipublikasikan setelah proses finishing selesai. Pantau terus perkembangan portofolio ini.</p>
+</div>
+</div>
+<!-- Duplicate Projects for Infinite Scroll -->
+<!-- Project 1 (Duplicate) -->
+<div aria-hidden="true" class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="600" style="transition-delay: 600ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 01</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Proyek ini sedang dalam tahap pengembangan. Nantikan karya menarik yang akan segera hadir.</p>
+</div>
+</div>
+<!-- Project 2 (Duplicate) -->
+<div aria-hidden="true" class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)] active" data-delay="750" style="transition-delay: 750ms;">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 02</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Karya ini sedang dipersiapkan dengan konsep yang menarik. Update selanjutnya akan segera muncul.</p>
+</div>
+</div>
+<!-- Project 3 (Duplicate) -->
+<div aria-hidden="true" class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)]" data-delay="900">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 03</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Proyek ini masih dalam proses pembuatan. Saya sedang menyiapkan pengalaman visual yang lebih menarik.</p>
+</div>
+</div>
+<!-- Project 4 (Duplicate) -->
+<div aria-hidden="true" class="stagger-card w-[85vw] md:w-[600px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group interactive cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(215,186,255,0.15)]" data-delay="1050">
+<div class="h-80 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Coming soon placeholder" src="./coming-soon.svg">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="bg-primary/10 text-primary font-label-sm text-[10px] px-3 py-1 rounded-full">Coming Soon</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-on-surface mb-2 group-hover:text-primary transition-colors">Coming Soon 04</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Karya ini akan segera dipublikasikan setelah proses finishing selesai. Pantau terus perkembangan portofolio ini.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap relative reveal-down active" id="skills">
+<div class="glow-bg bottom-0 left-1/3"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+<div class="w-full">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 text-center md:text-left">Bahasa Pemrograman</h2>
+<div class="skills-interactive-container reveal-fade active w-full mx-auto md:mx-0" id="skills-interactive" style="height: 600px;">
+<div class="cursor-orbit-center" id="cursor-orbit-center">
+<div class="skill-node-interactive" data-base-angle="0" style="transform: translate(-108.133px, 301.176px); opacity: 1; pointer-events: auto;">
+<div class="skill-content overflow-hidden scale-125"><img alt="JavaScript Icon" class="w-full h-full object-cover rounded-full drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASLBlQGDXj2SaFvKeRkB8Qz3HQp5OZjs4k6PdBTivSR2GXiLt-xLZMM4k32wZFYr9b12213nCZeNHhhWagP0M-iFjdvD3ZZ5TMoLR1M7FToY2yyXsPlqrasrOdYy-WWHdDQGNl3i5P0t1KKI16pvJY8gyzld_iIn7bcS_qACgQO8MpsE5prSkyns1Pixxce8WHNwaE4dxdpJfyce-8U974Kt0dVJ6HUC6khyeQt-LTxm7aBI_Mj7ic"></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="36" style="transform: translate(-264.509px, 180.098px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="TypeScript Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL7CvbyPOGhD78e8e335O4Iminl4NesJh9nDJDqXRIunHhVuo1E4ZE03WFP7u6F9512qzkGd1O8gdkbO3DqSUXoIYoUmLDZL4CIZUaIk27A-jevSMKc4J55zFQkXq_bBLsLVxMEx7yHpH-E-VXihA-OuopDfXm3dGkpDYF4JIcTIB80O_d9u0JNz5Zkb4n2xcgC4XvPIHQ6xzSmsRf1glo0j5Om_QT5SlSjCpdJMx6zIebHnpp7hse"><span class="font-label-sm text-on-surface text-[10px]">TypeScript</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="72" style="transform: translate(-319.851px, -9.77232px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Python Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqIP-wffFyjQjlsRZB-GcuiLBAV7wO9f4s0fZhJhSFcQ4u_4ctoMa7oi8N_Kk0WVDV7V7h_XA64VKV5_5ycEOEL5Z3xliagZ9ufGjl5-3WFUujNQp2EdN8PCT4KrpwgfDqAg6oSAnGlj6jNimEC1NjatrzktOxT50OXepEEoyKCns8BQICJZIt0Fr8UYPjOcgjdps8oH8Vj4QFTd2GBz6xu5b63hAMfbUMDq6mN-88sc8mKztqRoSf"><span class="font-label-sm text-on-surface text-[10px]">Python</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="108" style="transform: translate(-253.021px, -195.91px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Rust Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnmG8cq1HOLQlfYMeQq2sI0vvRPEjCsbBuexwEOlwN7PtxfUS6Z0aYH64_R7kBdT4fic3ry6QKHb_ZCY8J6FSUs-ZqKnA7yMcOkZqxa6fw4I73_qM-DewnWEXIYbn6anxumRttvPPKSkHum_SrnEpyBLUF6Q6dTMU92hjo6f3cnEjC_yz1ZSjN5Z69azM0qKoSlZZ-tFGEalvMUj8aJ7hHlEEcxM7TQMkUI0kHk5mmuTV_ra5BxvTa"><span class="font-label-sm text-on-surface text-[10px]">Rust</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="144" style="transform: translate(-89.5453px, -307.216px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Go Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvkFE2psiMunl0Lb8pCXHfohavnToBqSKpYwr4hoGxM9P7r8Coy-J7ZJxLjujewa5yC10rjr0bEZZZ9lkRzqhEWkvMHzpopS4IeroD1A3Yob3yqYBMFVEt5wByxFmVs8tjJ9p_Z-V6c4-R7TxzKZ9a18ElKfpmnMbL_eBpoV4QbLd2grrrovobdKWbFyDfL-D_rEAfViNRK9bDWGSBCuS6kcPYMmA3Q2mc0EZbC6GTqyaSdf5oHbR-"><span class="font-label-sm text-on-surface text-[10px]">Go</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="180" style="transform: translate(108.133px, -301.176px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Swift Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgxn9OHD7HetR0j1K2ONmf892ih96rhCQfrrJkIrbx5jJrW0SvszOG5D4BrdBAk6WCpPCdLzsq0VY-k6-1oYqrnEqrmrTQ8bCJzb0R_dZX55gnUxth9QV6MghUad5e8beqtNtBWyVyTUSKkMYFe4pZHwtRvvOZZdNtYo13JZ3HydTjiZkx4o8EZXIg5LgvNCDLRBYtfh1Mv-ybnN-3d52ugRs_jqewlC5_Q1dKD2ESEqwqC2wdS-1b"><span class="font-label-sm text-on-surface text-[10px]">Swift</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="216" style="transform: translate(264.509px, -180.098px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Kotlin Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAetiby_D0ZdIp-kzMpNKDGzR07v0JjSwYucsLlqnm1O2cYhkCfMC5RCbFSB8ob7Cq_tgxW8Rwb21SnLVV0wE0HtQ1JYBsZEGtH3ipYibstUn715PHMKNFD-1V9xrZPeCA62J8hTUatqNNpOQA-PY9Dsrk77KUqtbJ8vgnntBa_pPcUNo2GiDqiZjh6FVRN9zx-yChsA_zf8rgb1GA_oZlHhiU7jKKa9HfxtVI8-5s0PpusZ1nzN81V"><span class="font-label-sm text-on-surface text-[10px]">Kotlin</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="252" style="transform: translate(319.851px, 9.77232px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="C++ Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDuaQW1DpaBme6S5BvTiZu5qoYQrPruQSGQnm9mb4sQR22v1zUh422x5-IHIh_OHDbLeev0lEvjR5S3yB8RK8qurA92s7jnNgyNaS7AUGFkJ5Z61myS3M8NuEgmNxdgPbtYRQPA5vS9_P80obnDqvo5mJg_g2uQBye7K6ClgZ9mUoKwFpenGTgQFj8dp4Q_GBHh5Sn8QV_sgNoio5qTVlsFNq6Jyx3_81HVdFz7uHb7vVUQBjB4bHG"><span class="font-label-sm text-on-surface text-[10px]">C++</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="288" style="transform: translate(253.021px, 195.91px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="Java Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD99gQH9ht27WHtxGkra02XvcEZDIlXLTCNc0rY3wWp2PeNxvOV0fS2XZGihrVLE_XbySR2SNg-50yMxtpGRbBDicPuHtmCwMBiHuNijSaQ7jfyouLQwYeWk-cJyFJ_Q0nt00LK7hc-P4MBALWVfOYVPygF0jLAcwo_xk788yTTXV4NdT26r3bPK4pSorLQdyD7Fvnpqa2wLBEc0S-kGDukvD7-fgQNwl-1nxTEbfCnfpXUqxV7ckGT"><span class="font-label-sm text-on-surface text-[10px]">Java</span></div>
+</div>
+<div class="skill-node-interactive" data-base-angle="324" style="transform: translate(89.5453px, 307.216px); opacity: 1; pointer-events: auto;">
+<div class="skill-content scale-125"><img alt="PHP Icon" class="object-contain mb-1 drop-shadow-[0_0_10px_rgba(215,186,255,0.8)] w-12 h-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPciOO5eYp5h5aOzfAhmoyOok8_4tcWfGZbjzqHtzA6g0Wg0wzkZRoNuLTVdDun-2nydYHMbzCDm5k36kU8Ibmy9CQass06J5Ti1HXgYrwGWAFwTEWDIEi2cqIT2ecXxZqv13Nv4NbD65PMkNdpAQmuul9I3TGeJmQktbJC6zRw2lp8JhLkwtvR4MGwb9T0Alptmlw_XwnSrVbZspNPavcLN2_axS62qjFcUbKRtyY7Wok_TzBTRYz"><span class="font-label-sm text-on-surface text-[10px]">PHP</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Keahlian Utama</h2>
+<div class="grid grid-cols-2 sm:grid-cols1 gap-6 reveal-fade active">
+<!-- Skill 1 -->
+<div class="glass-card p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-colors duration-300 group interactive">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_15px_rgba(215,186,255,0.4)] transition-shadow duration-300">
+<span class="material-symbols-outlined text-primary text-[24px]">design_services</span>
+</div>
+<h3 class="font-headline-md text-[20px] text-on-surface mb-2">UI/UX Design</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Merancang antarmuka pengguna yang intuitif dan menarik secara visual untuk pengalaman digital yang mulus.</p>
+</div>
+<!-- Skill 2 -->
+<div class="glass-card p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-colors duration-300 group interactive">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_15px_rgba(215,186,255,0.4)] transition-shadow duration-300">
+<span class="material-symbols-outlined text-primary text-[24px]">animation</span>
+</div>
+<h3 class="font-headline-md text-[20px] text-on-surface mb-2">Motion Graphics</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Menghidupkan desain dengan animasi fluida dan interaksi mikro yang meningkatkan keterlibatan pengguna.</p>
+</div>
+<!-- Skill 3 -->
+<div class="glass-card p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-colors duration-300 group interactive">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_15px_rgba(215,186,255,0.4)] transition-shadow duration-300">
+<span class="material-symbols-outlined text-primary text-[24px]">code</span>
+</div>
+<h3 class="font-headline-md text-[20px] text-on-surface mb-2">Frontend Dev</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Menerjemahkan desain menjadi kode yang bersih, responsif, dan performa tinggi menggunakan teknologi web modern.</p>
+</div>
+<!-- Skill 4 -->
+<div class="glass-card p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-colors duration-300 group interactive">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_15px_rgba(215,186,255,0.4)] transition-shadow duration-300">
+<span class="material-symbols-outlined text-primary text-[24px]">view_in_ar</span>
+</div>
+<h3 class="font-headline-md text-[20px] text-on-surface mb-2">3D Arts</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Menciptakan elemen visual 3D yang imersif dan estetis untuk memperkaya presentasi produk dan merek.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap relative reveal-up active" id="contact">
+<div class="glow-bg top-0 right-0"></div>
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+<div class="flex-1 w-full">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6"><span class="text-shimmer-premium">Hubungi Saya</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8">Mari berkolaborasi untuk menciptakan pengalaman digital yang luar biasa. Kirim pesan dan saya akan segera membalasnya.</p>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-3 rounded-full">mail</span>
+<span class="font-body-md text-body-md text-on-surface">danielrem022@gmail.com</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-3 rounded-full">location_on</span>
+<span class="font-body-md text-body-md text-on-surface">south sumatra, world</span>
+</div>
+<div class="flex items-center gap-4 mt-6">
+<a class="text-primary hover:text-primary-fixed hover:scale-110 transition-all duration-300 interactive p-3 bg-surface-container-low rounded-full" href="https://wa.me/6282110142459" target="_blank" rel="noopener noreferrer" title="WhatsApp"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.991 1.523A9.9 9.9 0 002.5 12c0 5.451 4.436 9.873 9.9 9.873 1.397 0 2.76-.238 4.066-.689l4.354 1.437 1.417-4.354A9.87 9.87 0 0022.4 12c0-5.451-4.436-9.873-9.9-9.873m0-2a11.87 11.87 0 0111.869 11.869c0 6.551-5.317 11.869-11.869 11.869a11.86 11.86 0 01-4.935-.98l-5.527 1.831 1.831-5.527A11.86 11.86 0 012.531 12C2.531 5.449 7.848.58 14.4.58z"/></svg></a>
+<a class="text-primary hover:text-primary-fixed hover:scale-110 transition-all duration-300 interactive p-3 bg-surface-container-low rounded-full" href="https://www.instagram.com/nagatoro911?igsh=MXcxbHJpamE0MHVleA==" target="_blank" rel="noopener noreferrer" title="Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.057-1.645.069-4.849.069-3.204 0-3.584-.012-4.849-.069-3.259-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/></svg></a>
+<a class="text-primary hover:text-primary-fixed hover:scale-110 transition-all duration-300 interactive p-3 bg-surface-container-low rounded-full" href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full glass-card p-8 rounded-2xl relative z-10">
+<form class="flex flex-col gap-6">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-2" for="name">Nama Lengkap</label>
+<input class="w-full bg-background/50 border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-on-surface-variant/50" id="name" placeholder="jane Doe" type="text">
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-2" for="email">Email</label>
+<input class="w-full bg-background/50 border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-on-surface-variant/50" id="email" placeholder="jane@example.com" type="email">
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-2" for="message">Pesan</label>
+<textarea class="w-full bg-background/50 border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-on-surface-variant/50 resize-none" id="message" placeholder="Ceritakan tentang proyek Anda..." rows="4"></textarea>
+</div>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-8 py-4 rounded-full btn-primary interactive w-full mt-2 ease-[cubic-bezier(0.4,0,0.2,1)]" type="button">
+                Kirim Pesan
+            </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer from JSON -->
+<footer class="bg-surface-container-lowest w-full py-section-gap border-t border-outline-variant/20 mt-auto reveal-fade active">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop w-full gap-8">
+<div class="text-center md:text-left">
+<h4 class="font-display-lg-mobile text-display-lg-mobile md:text-[32px] text-primary font-bold mb-2 tracking-tighter hover:scale-105 transition-transform duration-300 inline-block">Aetheric</h4>
+<p class="font-label-sm text-label-sm text-outline">© 2026 Aetheric. Designed For Big Money.</p>
+</div>
+<div class="flex gap-6">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary-fixed-dim hover:-translate-y-1 transition-all duration-300 interactive" href="#">Privacy</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary-fixed-dim hover:-translate-y-1 transition-all duration-300 interactive" href="#">Terms</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary-fixed-dim hover:-translate-y-1 transition-all duration-300 interactive" href="#">Twitter</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary-fixed-dim hover:-translate-y-1 transition-all duration-300 interactive" href="#">LinkedIn</a>
+</div>
+</div>
+</footer>
+<script>
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById('cursorDot');
+        const interactives = document.querySelectorAll('.interactive, a, button');
 
-    <h1>Halo, Saya Arya 👋</h1>
-    <p>Selamat datang di website portofolio saya.</p>
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
 
-    <h2>Tentang Saya</h2>
-    <p>Saya sedang belajar membuat website dengan HTML, CSS, dan JavaScript.</p>
+            interactives.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.classList.add('hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.classList.remove('hover');
+                });
+            });
+        }
 
-    <h2>Proyek</h2>
-    <ul>
-        <li>Website Portofolio</li>
-        <li>Aplikasi Sederhana</li>
-    </ul>
+        // Skills Cursor Interactive Logic
+        const skillsContainer = document.getElementById('skills-interactive');
+        const orbitCenter = document.getElementById('cursor-orbit-center');
+        const skillNodes = document.querySelectorAll('.skill-node-interactive');
+        
+        // Orbital arc full circle, scaled down
+        const radius = window.innerWidth < 800 ? 200 : 210; 
+        let globalTime = 0;
+        let isHoveringNode = false;
 
-    <!-- Hubungkan ke JavaScript -->
-    <script src="script.js"></script>
-</body>
-</html>
+        skillNodes.forEach((node, index) => {
+            // Space the 10 nodes evenly across the 360 degree circle
+            const spacing = 360 / skillNodes.length;
+            node.dataset.baseAngle = (index * spacing);
+            
+            node.addEventListener('mouseenter', () => isHoveringNode = true);
+            node.addEventListener('mouseleave', () => isHoveringNode = false);
+        });
+
+        if (skillsContainer && orbitCenter) {
+            function animateOrbit() {
+                if (!isHoveringNode) {
+                    globalTime += 0.25; // Speed of orbit
+                }
+                
+                skillNodes.forEach((node) => {
+                    const baseAngle = parseFloat(node.dataset.baseAngle || 0);
+                    let currentAngle = (baseAngle + globalTime) % 360;
+                    
+                    const radian = currentAngle * (Math.PI / 180);
+                    const x = radius * Math.cos(radian);
+                    const y = radius * Math.sin(radian);
+                    
+                    node.style.transform = `translate(${x}px, ${y}px)`;
+                    node.style.opacity = '1';
+                    node.style.pointerEvents = 'auto';
+                });
+                
+                requestAnimationFrame(animateOrbit);
+            }
+            
+            animateOrbit();
+        }
+        
+        // Scroll Reveal Observer
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+            const revealElements = document.querySelectorAll('.reveal-up, .reveal-down, .reveal-fade, .stagger-card');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('stagger-card')) {
+                            entry.target.style.transitionDelay = `${entry.target.dataset.delay}ms`;
+                        }
+                        entry.target.classList.add('active');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            
+            revealElements.forEach(el => revealObserver.observe(el));
+            
+            // Trigger hero immediately if it's already in view
+            setTimeout(() => {
+                const hero = document.getElementById('hero');
+                if (hero) hero.classList.add('active');
+            }, 100);
+        } else {
+            // Fallback for reduced motion
+            document.querySelectorAll('.reveal-up, .reveal-down, .reveal-fade, .stagger-card').forEach(el => el.classList.add('active'));
+        }
+
+        // WebGL Shader Background
+        const canvas = document.getElementById('hero-shader');
+        if (canvas) {
+            const gl = canvas.getContext('webgl');
+            if (gl) {
+                const vsSource = `
+                    attribute vec4 a_position;
+                    varying vec2 v_texCoord;
+                    void main() {
+                        gl_Position = a_position;
+                        v_texCoord = a_position.xy * 0.5 + 0.5;
+                    }
+                `;
+                const fsSource = `
+precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+// Simplex 2D noise
+vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+float snoise(vec2 v){
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+           -0.577350269189626, 0.024390243902439);
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v -   i + dot(i, C.xx);
+  vec2 i1;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod(i, 289.0);
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+  + i.x + vec3(0.0, i1.x, 1.0 ));
+  vec3 m = max(0.5 - vec4(dot(x0,x0), dot(x12.xy,x12.xy),
+    dot(x12.zw,x12.zw), 0.0), 0.0);
+  m = m*m ;
+  m = m*m ;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Abstract fluid motion
+    float n = snoise(uv * 3.0 + u_time * 0.2);
+    n += 0.5 * snoise(uv * 6.0 - u_time * 0.3);
+    
+    // Aesthetic colors from design system (Purple/Lavendar #bd93f9)
+    vec3 color1 = vec3(0.74, 0.58, 0.98); // #bd93f9
+    vec3 color2 = vec3(0.1, 0.05, 0.2);   // Dark deep purple
+    vec3 color3 = vec3(0.4, 0.2, 0.7);   // Mid purple
+    
+    vec3 finalColor = mix(color1, color2, n * 0.5 + 0.5);
+    finalColor = mix(finalColor, color3, snoise(uv * 2.0 + u_time * 0.1));
+    
+    // Add some glow/vibrancy
+    finalColor += color1 * 0.2 * (0.5 + 0.5 * sin(u_time + uv.x * 10.0));
+    
+    gl_FragColor = vec4(finalColor, 0.6); // Slightly transparent
+}
+                `;
+                
+                const vs = gl.createShader(gl.VERTEX_SHADER);
+                gl.shaderSource(vs, vsSource);
+                gl.compileShader(vs);
+
+                const fs = gl.createShader(gl.FRAGMENT_SHADER);
+                gl.shaderSource(fs, fsSource);
+                gl.compileShader(fs);
+
+                const program = gl.createProgram();
+                gl.attachShader(program, vs);
+                gl.attachShader(program, fs);
+                gl.linkProgram(program);
+                gl.useProgram(program);
+
+                const positionBuffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                const positions = [
+                  -1.0,  1.0,
+                   1.0,  1.0,
+                  -1.0, -1.0,
+                   1.0, -1.0,
+                ];
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+                const positionLocation = gl.getAttribLocation(program, "a_position");
+                gl.enableVertexAttribArray(positionLocation);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+                const timeLocation = gl.getUniformLocation(program, "u_time");
+                const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+
+                function render(time) {
+                    time *= 0.001; 
+                    
+                    const displayWidth  = canvas.clientWidth;
+                    const displayHeight = canvas.clientHeight;
+                    if (canvas.width  !== displayWidth ||
+                        canvas.height !== displayHeight) {
+                      canvas.width  = displayWidth;
+                      canvas.height = displayHeight;
+                    }
+                    
+                    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+                    
+                    gl.uniform1f(timeLocation, time);
+                    gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
+                    
+                    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                    requestAnimationFrame(render);
+                }
+                requestAnimationFrame(render);
+            }
+        }
+
+        const about3dCard = document.getElementById('about3dCard');
+        const about3dScene = document.querySelector('.about-3d-scene');
+
+        if (about3dCard && about3dScene) {
+            const rotationStrength = 18;
+            let isFlipped = false;
+
+            const updateCardTransform = (rotateX, rotateY, scale) => {
+                const flipRotation = isFlipped ? 180 : 0;
+                about3dCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY + flipRotation}deg) scale(${scale})`;
+            };
+
+            about3dScene.addEventListener('mousemove', (event) => {
+                const rect = about3dScene.getBoundingClientRect();
+                const posX = event.clientX - rect.left;
+                const posY = event.clientY - rect.top;
+                const rotateY = ((posX / rect.width) - 0.5) * rotationStrength;
+                const rotateX = ((posY / rect.height) - 0.5) * -rotationStrength;
+
+                updateCardTransform(rotateX, rotateY, 1.03);
+            });
+
+            about3dScene.addEventListener('mouseleave', () => {
+                updateCardTransform(0, 0, 1);
+            });
+
+            about3dScene.addEventListener('click', () => {
+                isFlipped = !isFlipped;
+                updateCardTransform(0, 0, 1.03);
+            });
+        }
+    </script>
+
+
+</body></html>
